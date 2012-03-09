@@ -5,7 +5,12 @@ using System.Text;
 
 namespace VirtualMachineEmulator
 {
-    class TaskLoader
+    class TaskLoader    //Loads task into memory
     {
+        private Memory memory;
+        public TaskLoader(Memory memory, string fileName)
+        {
+            this.memory = memory;
+        }
     }
 }
