@@ -35,7 +35,6 @@ namespace VirtualMachineEmulator
             }
             catch (Exception)
             {
-                
                 throw;
             }
             return new Word(sum);
@@ -46,8 +45,8 @@ namespace VirtualMachineEmulator
             int op1, op2, difference;
             try
             {
-                op1 = Convert.ToInt16(word1.Value);
-                op2 = Convert.ToInt16(word2.Value);
+                op1 = Convert.ToInt32(word1.Value);
+                op2 = Convert.ToInt32(word2.Value);
                 difference = op1 - op2;
             }
             catch (Exception)
@@ -66,6 +65,5 @@ namespace VirtualMachineEmulator
         {
             return this.Value;
         }
-
     }
 }
