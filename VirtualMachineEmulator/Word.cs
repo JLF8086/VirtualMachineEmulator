@@ -3,7 +3,8 @@
 namespace VirtualMachineEmulator
 {
     public class Word
-    {
+    
+        //KOMENTAR
         public string Value { get; set; }
         public bool IsOccupied { get; set; }
 
