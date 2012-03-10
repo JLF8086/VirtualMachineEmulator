@@ -2,7 +2,7 @@
 
 namespace VirtualMachineEmulator
 {
-    public class Word
+    public class Word{
     
         //KOMENTAR
         public string Value { get; set; }
