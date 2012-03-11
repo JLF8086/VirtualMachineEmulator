@@ -1,6 +1,6 @@
 ﻿namespace VirtualMachineEmulator
 {
-    class Memory
+    public class Memory
     {
         private Word[,] words;
 

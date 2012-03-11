@@ -6,7 +6,7 @@ using System.IO;
 
 namespace VirtualMachineEmulator
 {
-    class TaskLoader    //Loads task into memory
+    public class TaskLoader    //Loads task into memory
     {
         private Memory memory;
         private string fileName;

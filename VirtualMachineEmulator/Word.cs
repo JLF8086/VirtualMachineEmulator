@@ -55,6 +55,51 @@ namespace VirtualMachineEmulator
             return new Word(difference);
         }
 
+        public static bool operator >(Word word1, Word word2)
+        {
+            int op1, op2;
+            try
+            {
+                op1 = Convert.ToInt32(word1.Value);
+                op2 = Convert.ToInt32(word2.Value);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return op1 > op2;
+        }
+
+        public static bool operator <(Word word1, Word word2)
+        {
+            int op1, op2;
+            try
+            {
+                op1 = Convert.ToInt32(word1.Value);
+                op2 = Convert.ToInt32(word2.Value);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return op1 < op2;
+        }
+
+        public static bool operator ==(Word word1, Word word2)
+        {
+            int op1, op2;
+            try
+            {
+                op1 = Convert.ToInt32(word1.Value);
+                op2 = Convert.ToInt32(word2.Value);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return op1 == op2;
+        }
+
         public int ToHex(string number)
         {
             return Convert.ToInt32(number, 16);
