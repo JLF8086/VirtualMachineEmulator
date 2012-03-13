@@ -28,8 +28,11 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            TaskLoader task = new TaskLoader("Task.txt", new Memory(16, 16)); //Testing task loading
+            Memory mem = new Memory(16, 16);
+            TaskLoader task = new TaskLoader("Task.txt", mem); //Testing task loading
             task.Load();
+            Cpu cpu = new Cpu(mem);
+            cpu.RunTask();
 
         }
 

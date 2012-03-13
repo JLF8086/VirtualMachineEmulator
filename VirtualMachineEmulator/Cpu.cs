@@ -1,142 +1,153 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Text;
 
 namespace VirtualMachineEmulator
 {
-    public class CPU
+    public class Cpu
     {
-        Hashtable registers = new Hashtable() 
-        { 
-            {"AX", new Word(0)},
-            {"CX", new Word(0)},
-            {"PC", new Word(0)},
-            {"SF", new Word(0)}
-        };
+        private Memory memory;
+        public short PC { get; set; }
+        public Word AX { get; set; }
+        public Word CX { get; set; }
+        public byte SF { get; set; }
 
-        public CPU()
+        public Cpu(Memory memory)
         {
-
+            this.memory = memory;
+            this.PC = 0;
+            this.AX = new Word(0);
+            this.CX = new Word(0);
+            this.SF = 0;
         }
 
-        public void ExecuteCommand(Word command, VirtualMachine vm)
+        public bool ExecuteNext()
         {
-            int block = 0, word = 0;
-            string cmd = command.Value.Substring(0, 2);
-            if (cmd != "AD" && cmd != "SU" && cmd != "CM")
+            int block = this.PC / 16;
+            int word = this.PC % 16;
+            if (!(this.memory[block, word].Value == "END"))
             {
-                block = Int32.Parse(command.Value[2].ToString(), System.Globalization.NumberStyles.HexNumber);
-                word = Int32.Parse(command.Value[3].ToString(), System.Globalization.NumberStyles.HexNumber);
+                this.ExecuteCommand(this.memory[block, word]);
+                if (!(this.memory[block, word].Value[0] == 'J'))
+                    this.PC++;
+                return true;
             }
-            switch (cmd)
-            {
-                case "AD": Add(vm); IncrementPC(); break;
-                case "SU": Sub(vm); IncrementPC(); break;
-                case "CM": Compare(vm); IncrementPC(); break;
-                case "JM": Jump(block, word, vm); break;
-                case "JE": JumpIfEqual(block, word, vm); break;
-                case "JN": JumpIfNotEqual(block, word, vm); break;
-                case "JA": JumpIfAbove(block, word, vm); break;
-                case "JB": JumpIfBelow(block, word, vm); break;
-                case "JG": JumpIfGreaterOrEqual(block, word, vm); break;
-                case "JL": JumpIfLesserOrEqual(block, word, vm); break;
-                case "SA": SetAX(block, word, vm); IncrementPC(); break;
-                case "LA": LoadAX(block, word, vm); IncrementPC(); break;
-                case "SC": SetCX(block, word, vm); IncrementPC(); break;
-                case "LC": LoadCX(block, word, vm); IncrementPC(); break;
-                case "GD": GetData(block, word, vm); IncrementPC(); break;
-                case "PD": PutData(block, word, vm); IncrementPC(); break;
-                case "$0": IncrementPC(); break;
-                default: throw new ArgumentException();
+            return false;
+        }
+
+        public void RunTask()
+        {
+            while (this.ExecuteNext())
+            {    
             }
         }
 
-        private void PutData(int block, int word, VirtualMachine vm)
+        public void ExecuteCommand(Word word)
         {
-            throw new NotImplementedException();
+            string command = word.Value.Substring(0, 2);
+            string operand = "";
+            if (word.Value.Length != 3)
+            {
+                operand = word.Value.Substring(2, word.Value.Length - 2);
+            }
+           
+            switch (command)
+            {
+                case "AD":
+                    {
+                        this.AX = this.AX + this.CX;
+                        break;
+                    }
+                case "SU":
+                    {
+                        this.AX = this.AX - this.CX;
+                        break;
+                    }
+                case "CM":
+                    {
+                        if (this.AX > this.CX)
+                            this.SF = 0;
+                        if (this.AX < this.CX)
+                            this.SF = 2;
+                        if (this.AX.ToHex(this.AX.Value) == this.CX.ToHex(this.CX.Value))
+                            this.SF = 1;
+                        break;
+                    }
+                case "SA":
+                    {
+                        this.memory[Convert.ToInt32(operand[0].ToString(), 16), Convert.ToInt32(operand[1].ToString(), 16)].Value = this.AX.Value;
+                        break;
+                    }
+                case "LA":
+                    {
+                        this.AX.Value = this.memory[Convert.ToInt32(operand[0].ToString(), 16), Convert.ToInt32(operand[1].ToString(), 16)].Value;
+                        break;
+                    }
+                case "SC":
+                    {
+                        this.memory[Convert.ToInt32(operand[0].ToString(), 16), Convert.ToInt32(operand[1].ToString(), 16)].Value = this.CX.Value;
+                        break;
+                    }
+                case "LC":
+                    {
+                        this.CX.Value = this.memory[Convert.ToInt32(operand[0].ToString(), 16), Convert.ToInt32(operand[1].ToString(), 16)].Value;
+                        break;
+                    }
+                case "JM":
+                    {
+                        this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JE":
+                    {
+                        if (this.SF == 1)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JN":
+                    {
+                        if (this.SF != 1)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JA":
+                    {
+                        if (this.SF == 0)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JB":
+                    {
+                        if (this.SF == 2)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JG":
+                    {
+                        if (this.SF == 0 || this.SF == 1)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "JL":
+                    {
+                        if (this.SF == 1 || this.SF == 2)
+                            this.PC = Convert.ToInt16(operand, 16);
+                        break;
+                    }
+                case "GD": //TO DO: everything
+                    {
+                        break;
+                    }
+                case "PD":
+                    {
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
         }
-
-        private void GetData(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void LoadCX(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SetCX(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void LoadAX(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SetAX(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfLesserOrEqual(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfGreaterOrEqual(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfBelow(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfAbove(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfNotEqual(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void JumpIfEqual(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Jump(int block, int word, VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Compare(VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Sub(VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Add(VirtualMachine vm)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void IncrementPC()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
