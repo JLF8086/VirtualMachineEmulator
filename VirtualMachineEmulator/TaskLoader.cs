@@ -11,6 +11,11 @@ namespace VirtualMachineEmulator
         private Memory memory;
         private string fileName;
 
+        public Memory Memory
+        {
+            get { return memory; }
+            
+        }
         public TaskLoader(string fileName, Memory memory)
         {
             this.memory = memory;

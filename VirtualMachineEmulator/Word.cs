@@ -84,7 +84,7 @@ namespace VirtualMachineEmulator
             return op1 < op2;
         }
 
-        public int ToHex(string number)
+        public static int HexToInt(string number)
         {
             return Convert.ToInt32(number, 16);
         }
