@@ -22,10 +22,17 @@ namespace VirtualMachineEmulator
             cpu = new Cpu(memory, this);
             io = new IO();
         }
+        public void CheckIfInputNext()
+        {
+            if (cpu.NextCommand().Substring(0, 2) == "GD")
+                io.ReadBuffer();
+        }
 
         public void ExecuteNext()
         {
             cpu.ExecuteNext();
+            CheckIfInputNext();
+
         }
 
         public Memory Memory

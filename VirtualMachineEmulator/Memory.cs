@@ -51,23 +51,30 @@
 
         }
 
-        private Word[] StringToWords(string str)
+        private Word[] StringToWords(string s)
         {
-            string[] wordStrings = new string[Memory.BLOCK_WORD_COUNT];
-            int i = 0;
-            while (i < Memory.BLOCK_WORD_COUNT)
+            if (s == null)
             {
-                string word = str.Length >= 4 ? str.Substring(0, 4) : str.Substring(0, str.Length);
-                wordStrings[i] = word;
-                i++;
-                str = str.Length >= 4 ? str.Substring(4, str.Length) : null;
-                if (str == null)
-                    break;
+                return null;
             }
-            Word[] words = new Word[Memory.BLOCK_WORD_COUNT];
-            for (int j = 0; j < Memory.BLOCK_WORD_COUNT; j++)
-                words[j] = new Word(wordStrings[j]);
-            return words;
+            int wordCount = s.Length / 4;
+            Word[] words = new Word[wordCount];
+            for (int i = 0; i < wordCount; i++)
+            {
+                words[i] = new Word(s.Substring(i * 4, 4));
+            }
+            string remaining = s.Substring(s.Length - s.Length % 4);
+            if (remaining.Length > 0)
+            {
+                Word[] allWords = new Word[wordCount + 1];
+                words.CopyTo(allWords, 0);
+                allWords[allWords.Length - 1] = new Word(remaining);
+                return allWords;
+            }
+            else
+            {
+                return words;
+            }
         }
         
     }

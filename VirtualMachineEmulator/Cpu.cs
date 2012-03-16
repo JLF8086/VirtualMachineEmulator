@@ -25,6 +25,7 @@ namespace VirtualMachineEmulator
             this.SF = 0;
         }
 
+
         public bool ExecuteNext()
         {
             int block = this.PC / 16;
@@ -36,7 +37,6 @@ namespace VirtualMachineEmulator
                     this.PC++;
                 if (CommandExecuted != null)
                 {
-                    System.Windows.Forms.MessageBox.Show(vm.Cpu.NextCommand());
                     CommandExecuted();
                 }
                 return true;
@@ -151,17 +151,27 @@ namespace VirtualMachineEmulator
                 case "GD": //TO DO: everything
                     {
                         //memory.Write(operand);
-                        vm.Io.WriteBuffer();
                         memory.Write(operand, vm.Io.Buffer);
+                        vm.Io.Flush();
                         break;
                     }
                 case "PD":
                     {
+                        string buf = string.Empty;
+                        int block = Word.HexToInt(operand[0].ToString());
+                        for (int i = 0; i < memory.WordCount; i++)
+                        {
+                            if (memory[block, i].Value != "----")
+                                buf += memory[block, i].Value;
+                        }
+                        vm.Io.Buffer = buf;
+                        vm.Io.WriteBuffer();
+                        vm.Io.Flush();
                         break;
                     }
                 default:
                     {
-                        return;
+                        throw new ArgumentException("Unknown command: " + word.Value);
                     }
                     
             }

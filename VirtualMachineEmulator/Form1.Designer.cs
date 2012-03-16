@@ -17,8 +17,8 @@
 
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.inputTextBox = new System.Windows.Forms.TextBox();
+            this.enterInputButton = new System.Windows.Forms.Button();
             this.VirtualMemoryGroupBox = new System.Windows.Forms.GroupBox();
             this.VirtualMemoryGridView = new System.Windows.Forms.DataGridView();
             this.RegisterGroupBox = new System.Windows.Forms.GroupBox();
@@ -28,13 +28,13 @@
             this.labelAX = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ParamGroupBox = new System.Windows.Forms.GroupBox();
+            this.executeAllButton = new System.Windows.Forms.Button();
             this.executeNextButton = new System.Windows.Forms.Button();
             this.nextCommandLabel = new System.Windows.Forms.Label();
             this.taskNameLabel = new System.Windows.Forms.Label();
             this.openTaskButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.outputTextBox = new System.Windows.Forms.TextBox();
             this.VirtualMemoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VirtualMemoryGridView)).BeginInit();
@@ -42,26 +42,27 @@
             this.ParamGroupBox.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
             this.SuspendLayout();
-            
             // 
-            // textBox1
+            // inputTextBox
             // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.Enabled = false;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBox1.Location = new System.Drawing.Point(12, 295);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(387, 20);
-            this.textBox1.TabIndex = 0;
+            this.inputTextBox.BackColor = System.Drawing.Color.White;
+            this.inputTextBox.Enabled = false;
+            this.inputTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.inputTextBox.Location = new System.Drawing.Point(12, 295);
+            this.inputTextBox.Name = "inputTextBox";
+            this.inputTextBox.Size = new System.Drawing.Size(387, 20);
+            this.inputTextBox.TabIndex = 0;
             // 
-            // button1
+            // enterInputButton
             // 
-            this.button1.Location = new System.Drawing.Point(414, 292);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.enterInputButton.Enabled = false;
+            this.enterInputButton.Location = new System.Drawing.Point(405, 295);
+            this.enterInputButton.Name = "enterInputButton";
+            this.enterInputButton.Size = new System.Drawing.Size(75, 23);
+            this.enterInputButton.TabIndex = 1;
+            this.enterInputButton.Text = "Enter";
+            this.enterInputButton.UseVisualStyleBackColor = true;
+            this.enterInputButton.Click += new System.EventHandler(this.enterInputButton_Click);
             // 
             // VirtualMemoryGroupBox
             // 
@@ -144,7 +145,7 @@
             // 
             // ParamGroupBox
             // 
-            this.ParamGroupBox.Controls.Add(this.button2);
+            this.ParamGroupBox.Controls.Add(this.executeAllButton);
             this.ParamGroupBox.Controls.Add(this.executeNextButton);
             this.ParamGroupBox.Controls.Add(this.nextCommandLabel);
             this.ParamGroupBox.Controls.Add(this.taskNameLabel);
@@ -155,6 +156,16 @@
             this.ParamGroupBox.TabIndex = 5;
             this.ParamGroupBox.TabStop = false;
             this.ParamGroupBox.Text = "Parameters";
+            // 
+            // executeAllButton
+            // 
+            this.executeAllButton.Location = new System.Drawing.Point(263, 78);
+            this.executeAllButton.Name = "executeAllButton";
+            this.executeAllButton.Size = new System.Drawing.Size(75, 23);
+            this.executeAllButton.TabIndex = 4;
+            this.executeAllButton.Text = "Execute All";
+            this.executeAllButton.UseVisualStyleBackColor = true;
+            this.executeAllButton.Click += new System.EventHandler(this.executeAllButton_Click);
             // 
             // executeNextButton
             // 
@@ -208,15 +219,6 @@
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(263, 78);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Execute All";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // outputTextBox
             // 
             this.outputTextBox.BackColor = System.Drawing.Color.Black;
@@ -239,8 +241,8 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.RegisterGroupBox);
             this.Controls.Add(this.VirtualMemoryGroupBox);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.enterInputButton);
+            this.Controls.Add(this.inputTextBox);
             this.Name = "Form1";
             this.Text = "Form1";
             this.VirtualMemoryGroupBox.ResumeLayout(false);
@@ -258,8 +260,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox inputTextBox;
+        private System.Windows.Forms.Button enterInputButton;
         private System.Windows.Forms.GroupBox VirtualMemoryGroupBox;
         private System.Windows.Forms.GroupBox RegisterGroupBox;
         private System.Windows.Forms.Label labelSF;
@@ -275,7 +277,7 @@
         private System.Windows.Forms.Button executeNextButton;
         private System.Windows.Forms.Label nextCommandLabel;
         private System.Windows.Forms.GroupBox outputGroupBox;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button executeAllButton;
         private System.Windows.Forms.TextBox outputTextBox;
     }
 }

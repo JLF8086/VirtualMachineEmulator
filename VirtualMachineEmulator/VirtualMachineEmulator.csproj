@@ -82,6 +82,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="add.txt" />
     <Content Include="Task.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

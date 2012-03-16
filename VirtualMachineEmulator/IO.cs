@@ -14,12 +14,13 @@ namespace VirtualMachineEmulator
 		public event VMEventHandler OutputRequested;
 		public event VMEventHandler InputRequested;
 
-		public string Buffer {
+		public string Buffer 
+        {
 			set 
             {
                 buffer = value.Length > BUFF_SIZE * 4 ? value.Substring(0, BUFF_SIZE) : value;
 			}
-			get 
+            get 
             {
 				return buffer;
 			}
