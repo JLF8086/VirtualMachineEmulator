@@ -30,8 +30,13 @@ namespace VirtualMachineEmulator
         {
             int block = this.PC / 16;
             int word = this.PC % 16;
-            if (!(this.memory[block, word].Value == "END"))
+            if (!(this.memory[block, word].Value == "$END"))
             {
+                if (this.memory[block, word].Value == "----")
+                {
+                    FindNextCommand();
+                    return true;
+                }
                 this.ExecuteCommand(this.memory[block, word]);
                 if (!(this.memory[block, word].Value[0] == 'J'))
                     this.PC++;
@@ -44,12 +49,16 @@ namespace VirtualMachineEmulator
             return false;
         }
 
-        public void RunTask()
+        private void FindNextCommand()
         {
-            while (this.ExecuteNext())
-            {    
+            while (true)
+            {
+                PC++;
+                if (this.memory[PC / 16, PC % 16].Value != "----")
+                    return;
             }
         }
+
 
         public string NextCommand()
         {
@@ -167,6 +176,15 @@ namespace VirtualMachineEmulator
                         vm.Io.Buffer = buf;
                         vm.Io.WriteBuffer();
                         vm.Io.Flush();
+                        break;
+                    }
+                case "--":
+                    {
+                        break;
+                    }
+                case "$E":
+                    {
+
                         break;
                     }
                 default:

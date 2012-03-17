@@ -34,6 +34,7 @@ namespace VirtualMachineEmulator
         private void FillVirtualMemory()
         {
             VirtualMemoryGridView.Rows.Clear();
+            VirtualMemoryGridView.Columns.Clear();
             Memory mem = vm.Memory;
             for (int i = 0; i < mem.WordCount; i++)
             {
@@ -74,6 +75,7 @@ namespace VirtualMachineEmulator
         private void FillRealMemory()
         {
             RealMemoryGridView.Rows.Clear();
+            RealMemoryGridView.Columns.Clear();
             for (int i = 0; i < RealMachine.Memory.WordCount; i++)
             {
                 RealMemoryGridView.Columns.Add(i.ToString("X"), i.ToString("X"));
@@ -136,15 +138,26 @@ namespace VirtualMachineEmulator
             nextCommandLabel.Text = "Next command = " + vm.Cpu.NextCommand();
         }
 
+        private void vmTaskFinishHandler()
+        {
+            executeAllButton.Enabled = false;
+            executeNextButton.Enabled = false;
+            nextCommandLabel.Text = "Next command = <none>";
+            taskNameLabel.Text = "Current task = <none>";
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 vm = new VirtualMachine(openFileDialog1.FileName);
+                executeNextButton.Enabled = true;
+                executeAllButton.Enabled = true;
                 FillVirtualMemory();
                 FillRealMemory();
                 FillRegisters();
                 SetNextCommandLabel();
+                outputTextBox.Text = String.Empty;
                 taskNameLabel.Text = "Current task = " + openFileDialog1.FileName.Split('\\').Last();
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(FillRegisters);
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(FillVirtualMemoryGrid);
@@ -152,6 +165,7 @@ namespace VirtualMachineEmulator
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(SetNextCommandLabel);
                 this.vm.Io.InputRequested += new VMEventHandler(PrepareForInput);
                 this.vm.Io.OutputRequested += new VMEventHandler(PrintBuffer);
+                this.vm.VMTaskFinished += new VMEventHandler(vmTaskFinishHandler);
                 this.vm.CheckIfInputNext();
             }
         }
@@ -170,12 +184,13 @@ namespace VirtualMachineEmulator
             executeNextButton.Enabled = true;
             inputTextBox.Enabled = false;
             enterInputButton.Enabled = false;
+            inputTextBox.Text = String.Empty;
             this.vm.ExecuteNext();
         }
 
         private void executeAllButton_Click(object sender, EventArgs e)
         {
-            this.vm.Cpu.RunTask();
+            this.vm.ExecuteAll();
         }  
     }
 }

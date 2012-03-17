@@ -8,12 +8,6 @@
         public const int REAL_MEMORY_BLOCK_COUNT = 16;
         public const int VIRTUAL_MEMORY_BLOCK_COUNT = 5;
 
-        public static Memory RealMemory { get; private set; }
-        static Memory()
-        {
-            RealMemory = new Memory(REAL_MEMORY_BLOCK_COUNT, BLOCK_WORD_COUNT);     
-        }
-
         public Memory(int blockCount, int wordCount)
         {
             this.words = new Word[blockCount, wordCount];

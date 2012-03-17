@@ -22,11 +22,13 @@
             this.VirtualMemoryGroupBox = new System.Windows.Forms.GroupBox();
             this.VirtualMemoryGridView = new System.Windows.Forms.DataGridView();
             this.RegisterGroupBox = new System.Windows.Forms.GroupBox();
+            this.labelPTR = new System.Windows.Forms.Label();
             this.labelSF = new System.Windows.Forms.Label();
             this.labelPC = new System.Windows.Forms.Label();
             this.labelCX = new System.Windows.Forms.Label();
             this.labelAX = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.RealMemoryGridView = new System.Windows.Forms.DataGridView();
             this.ParamGroupBox = new System.Windows.Forms.GroupBox();
             this.executeAllButton = new System.Windows.Forms.Button();
             this.executeNextButton = new System.Windows.Forms.Button();
@@ -36,15 +38,13 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
             this.outputTextBox = new System.Windows.Forms.TextBox();
-            this.RealMemoryGridView = new System.Windows.Forms.DataGridView();
-            this.labelPTR = new System.Windows.Forms.Label();
             this.VirtualMemoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VirtualMemoryGridView)).BeginInit();
             this.RegisterGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).BeginInit();
             this.ParamGroupBox.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // inputTextBox
@@ -103,6 +103,15 @@
             this.RegisterGroupBox.TabStop = false;
             this.RegisterGroupBox.Text = "Registers";
             // 
+            // labelPTR
+            // 
+            this.labelPTR.AutoSize = true;
+            this.labelPTR.Location = new System.Drawing.Point(290, 25);
+            this.labelPTR.Name = "labelPTR";
+            this.labelPTR.Size = new System.Drawing.Size(10, 13);
+            this.labelPTR.TabIndex = 4;
+            this.labelPTR.Text = "-";
+            // 
             // labelSF
             // 
             this.labelSF.AutoSize = true;
@@ -149,6 +158,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Real Memory";
             // 
+            // RealMemoryGridView
+            // 
+            this.RealMemoryGridView.AllowUserToAddRows = false;
+            this.RealMemoryGridView.AllowUserToDeleteRows = false;
+            this.RealMemoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RealMemoryGridView.Location = new System.Drawing.Point(7, 13);
+            this.RealMemoryGridView.Name = "RealMemoryGridView";
+            this.RealMemoryGridView.Size = new System.Drawing.Size(612, 155);
+            this.RealMemoryGridView.TabIndex = 0;
+            // 
             // ParamGroupBox
             // 
             this.ParamGroupBox.Controls.Add(this.executeAllButton);
@@ -165,6 +184,7 @@
             // 
             // executeAllButton
             // 
+            this.executeAllButton.Enabled = false;
             this.executeAllButton.Location = new System.Drawing.Point(263, 78);
             this.executeAllButton.Name = "executeAllButton";
             this.executeAllButton.Size = new System.Drawing.Size(75, 23);
@@ -175,6 +195,7 @@
             // 
             // executeNextButton
             // 
+            this.executeNextButton.Enabled = false;
             this.executeNextButton.Location = new System.Drawing.Point(263, 48);
             this.executeNextButton.Name = "executeNextButton";
             this.executeNextButton.Size = new System.Drawing.Size(75, 23);
@@ -220,7 +241,7 @@
             this.outputGroupBox.Controls.Add(this.outputTextBox);
             this.outputGroupBox.Location = new System.Drawing.Point(643, 203);
             this.outputGroupBox.Name = "outputGroupBox";
-            this.outputGroupBox.Size = new System.Drawing.Size(352, 86);
+            this.outputGroupBox.Size = new System.Drawing.Size(352, 174);
             this.outputGroupBox.TabIndex = 6;
             this.outputGroupBox.TabStop = false;
             this.outputGroupBox.Text = "Output";
@@ -234,25 +255,8 @@
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.ReadOnly = true;
             this.outputTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.outputTextBox.Size = new System.Drawing.Size(339, 61);
+            this.outputTextBox.Size = new System.Drawing.Size(339, 149);
             this.outputTextBox.TabIndex = 0;
-            // 
-            // RealMemoryGridView
-            // 
-            this.RealMemoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RealMemoryGridView.Location = new System.Drawing.Point(7, 13);
-            this.RealMemoryGridView.Name = "RealMemoryGridView";
-            this.RealMemoryGridView.Size = new System.Drawing.Size(612, 155);
-            this.RealMemoryGridView.TabIndex = 0;
-            // 
-            // labelPTR
-            // 
-            this.labelPTR.AutoSize = true;
-            this.labelPTR.Location = new System.Drawing.Point(290, 25);
-            this.labelPTR.Name = "labelPTR";
-            this.labelPTR.Size = new System.Drawing.Size(10, 13);
-            this.labelPTR.TabIndex = 4;
-            this.labelPTR.Text = "-";
             // 
             // Form1
             // 
@@ -273,11 +277,11 @@
             this.RegisterGroupBox.ResumeLayout(false);
             this.RegisterGroupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).EndInit();
             this.ParamGroupBox.ResumeLayout(false);
             this.ParamGroupBox.PerformLayout();
             this.outputGroupBox.ResumeLayout(false);
             this.outputGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -8,6 +8,7 @@ namespace VirtualMachineEmulator
 {
     public class VirtualMachine
     {
+        public event VMEventHandler VMTaskFinished;
         private Cpu cpu;
         private IO io;
         private Memory memory;
@@ -23,6 +24,7 @@ namespace VirtualMachineEmulator
             io = new IO();
             BlockOffset += Memory.VIRTUAL_MEMORY_BLOCK_COUNT;
             this.MapBlocks();
+            VMTaskFinished += ReduceOffset;
         }
 
         public void MapBlocks()
@@ -38,6 +40,11 @@ namespace VirtualMachineEmulator
             }
         }
 
+        private void ReduceOffset()
+        {
+            BlockOffset -= Memory.VIRTUAL_MEMORY_BLOCK_COUNT;
+        }
+
         public void CheckIfInputNext()
         {
             if (cpu.NextCommand().Substring(0, 2) == "GD")
@@ -46,8 +53,22 @@ namespace VirtualMachineEmulator
 
         public void ExecuteNext()
         {
-            cpu.ExecuteNext();
+            if (!cpu.ExecuteNext() && VMTaskFinished != null)
+                VMTaskFinished();
             CheckIfInputNext();
+        }
+
+        public void ExecuteAll()
+        {
+            while (true)
+            {
+                if (!cpu.ExecuteNext() && VMTaskFinished != null)
+                {
+                    VMTaskFinished();
+                    return;
+                }
+                CheckIfInputNext();
+            }
         }
 
         public Memory Memory
