@@ -54,7 +54,7 @@ namespace VirtualMachineEmulator
             }
         }
 
-        private void FillMemoryGrid()
+        private void FillVirtualMemoryGrid()
         {
             Memory mem = vm.Memory;
             for (int i = 0; i < mem.BlockCount; i++)
@@ -68,6 +68,43 @@ namespace VirtualMachineEmulator
                 VirtualMemoryGridView.Rows[i].SetValues(rowValues);
                 VirtualMemoryGridView.Rows[i].HeaderCell.Value = i.ToString("X");
 
+            }
+        }
+
+        private void FillRealMemory()
+        {
+            RealMemoryGridView.Rows.Clear();
+            for (int i = 0; i < RealMachine.Memory.WordCount; i++)
+            {
+                RealMemoryGridView.Columns.Add(i.ToString("X"), i.ToString("X"));
+                RealMemoryGridView.Columns[i].DisplayIndex = i;
+            }
+            for (int i = 0; i < RealMachine.Memory.BlockCount; i++)
+            {
+                string[] rowValues = new string[RealMachine.Memory.WordCount];
+                for (int j = 0; j < RealMachine.Memory.WordCount; j++)
+                {
+                    if (!(RealMachine.Memory[i, j].ToString() == "----"))
+                        rowValues[j] = RealMachine.Memory[i, j].ToString();
+                }
+                RealMemoryGridView.Rows.Add(rowValues);
+                RealMemoryGridView.Rows[i].HeaderCell.Value = i.ToString("X");
+            }
+        }
+
+        private void FillRealMemoryGrid()
+        {
+            vm.MapBlocks();
+            for (int i = 0; i < RealMachine.Memory.BlockCount; i++)
+            {
+                string[] rowValues = new string[RealMachine.Memory.WordCount];
+                for (int j = 0; j < RealMachine.Memory.WordCount; j++)
+                {
+                    if (!(RealMachine.Memory[i, j].ToString() == "----"))
+                        rowValues[j] = RealMachine.Memory[i, j].ToString();
+                }
+                RealMemoryGridView.Rows[i].SetValues(rowValues);
+                RealMemoryGridView.Rows[i].HeaderCell.Value = i.ToString("X");
             }
         }
 
@@ -91,6 +128,7 @@ namespace VirtualMachineEmulator
             labelCX.Text = "CX = " + vm.Cpu.CX.ToString();
             labelPC.Text = "PC = " + vm.Cpu.PC.ToString("X");
             labelSF.Text = "SF = " + vm.Cpu.SF.ToString();
+            labelPTR.Text = "PTR = " + RealMachine.PTR.ToString("X");
         }
 
         private void SetNextCommandLabel()
@@ -104,11 +142,13 @@ namespace VirtualMachineEmulator
             {
                 vm = new VirtualMachine(openFileDialog1.FileName);
                 FillVirtualMemory();
+                FillRealMemory();
                 FillRegisters();
                 SetNextCommandLabel();
                 taskNameLabel.Text = "Current task = " + openFileDialog1.FileName.Split('\\').Last();
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(FillRegisters);
-                this.vm.Cpu.CommandExecuted += new VMEventHandler(FillMemoryGrid);
+                this.vm.Cpu.CommandExecuted += new VMEventHandler(FillVirtualMemoryGrid);
+                this.vm.Cpu.CommandExecuted += new VMEventHandler(FillRealMemoryGrid);
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(SetNextCommandLabel);
                 this.vm.Io.InputRequested += new VMEventHandler(PrepareForInput);
                 this.vm.Io.OutputRequested += new VMEventHandler(PrintBuffer);
@@ -118,7 +158,7 @@ namespace VirtualMachineEmulator
 
         private void executeNextButton_Click(object sender, EventArgs e)
         {
-            vm.ExecuteNext();
+            this.vm.ExecuteNext();
         }
 
         private void enterInputButton_Click(object sender, EventArgs e)
@@ -136,9 +176,6 @@ namespace VirtualMachineEmulator
         private void executeAllButton_Click(object sender, EventArgs e)
         {
             this.vm.Cpu.RunTask();
-        }
-
-
-        
+        }  
     }
 }

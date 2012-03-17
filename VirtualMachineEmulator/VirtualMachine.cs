@@ -12,7 +12,7 @@ namespace VirtualMachineEmulator
         private IO io;
         private Memory memory;
         private TaskLoader task;
-        private Word[] pageTable;
+        public static int BlockOffset = 0;
 
         public VirtualMachine(string fileName)
         {
@@ -21,7 +21,23 @@ namespace VirtualMachineEmulator
             task.Load();
             cpu = new Cpu(memory, this);
             io = new IO();
+            BlockOffset += Memory.VIRTUAL_MEMORY_BLOCK_COUNT;
+            this.MapBlocks();
         }
+
+        public void MapBlocks()
+        {
+            int rmblock;
+            for (int i = 0; i < BlockOffset; i++)
+            {
+                rmblock = Word.HexToInt(RealMachine.Memory[RealMachine.PTR, i].Value);
+                for (int j = 0; j < Memory.BLOCK_WORD_COUNT; j++)
+                {
+                    RealMachine.Memory[rmblock, j] = this.memory[i, j];
+                }            
+            }
+        }
+
         public void CheckIfInputNext()
         {
             if (cpu.NextCommand().Substring(0, 2) == "GD")
@@ -32,15 +48,12 @@ namespace VirtualMachineEmulator
         {
             cpu.ExecuteNext();
             CheckIfInputNext();
-
         }
 
         public Memory Memory
         {
             get { return memory; }
         }
-
-        
 
         public IO Io
         {
@@ -51,23 +64,5 @@ namespace VirtualMachineEmulator
         {
             get { return cpu; }
         }
-
-        /*private Word[] InitPageTable()
-        {
-            ArrayList blocks = new ArrayList(memory.BlockCount);
-            for (int i = 0; i < memory.BlockCount; i++)
-            {
-                blocks.Add(i);
-            }
-            Random rand = new Random();
-            Word[] pageTable = new Word[Memory.BLOCK_WORD_COUNT];
-            for (int i = 0; i < Memory.BLOCK_WORD_COUNT; i++)
-            {
-                int cell = (int)blocks[rand.Next(blocks.Count)];
-                blocks.Remove(cell);
-                pageTable[i] = new Word(cell);
-            }
-            return pageTable;
-        }*/ //bbs
     }
 }

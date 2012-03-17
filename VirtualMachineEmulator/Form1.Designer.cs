@@ -36,11 +36,15 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
             this.outputTextBox = new System.Windows.Forms.TextBox();
+            this.RealMemoryGridView = new System.Windows.Forms.DataGridView();
+            this.labelPTR = new System.Windows.Forms.Label();
             this.VirtualMemoryGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VirtualMemoryGridView)).BeginInit();
             this.RegisterGroupBox.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.ParamGroupBox.SuspendLayout();
             this.outputGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // inputTextBox
@@ -48,7 +52,7 @@
             this.inputTextBox.BackColor = System.Drawing.Color.White;
             this.inputTextBox.Enabled = false;
             this.inputTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.inputTextBox.Location = new System.Drawing.Point(12, 295);
+            this.inputTextBox.Location = new System.Drawing.Point(19, 393);
             this.inputTextBox.Name = "inputTextBox";
             this.inputTextBox.Size = new System.Drawing.Size(387, 20);
             this.inputTextBox.TabIndex = 0;
@@ -56,7 +60,7 @@
             // enterInputButton
             // 
             this.enterInputButton.Enabled = false;
-            this.enterInputButton.Location = new System.Drawing.Point(405, 295);
+            this.enterInputButton.Location = new System.Drawing.Point(412, 393);
             this.enterInputButton.Name = "enterInputButton";
             this.enterInputButton.Size = new System.Drawing.Size(75, 23);
             this.enterInputButton.TabIndex = 1;
@@ -87,6 +91,7 @@
             // 
             // RegisterGroupBox
             // 
+            this.RegisterGroupBox.Controls.Add(this.labelPTR);
             this.RegisterGroupBox.Controls.Add(this.labelSF);
             this.RegisterGroupBox.Controls.Add(this.labelPC);
             this.RegisterGroupBox.Controls.Add(this.labelCX);
@@ -101,7 +106,7 @@
             // labelSF
             // 
             this.labelSF.AutoSize = true;
-            this.labelSF.Location = new System.Drawing.Point(260, 25);
+            this.labelSF.Location = new System.Drawing.Point(246, 25);
             this.labelSF.Name = "labelSF";
             this.labelSF.Size = new System.Drawing.Size(10, 13);
             this.labelSF.TabIndex = 3;
@@ -110,7 +115,7 @@
             // labelPC
             // 
             this.labelPC.AutoSize = true;
-            this.labelPC.Location = new System.Drawing.Point(194, 25);
+            this.labelPC.Location = new System.Drawing.Point(178, 25);
             this.labelPC.Name = "labelPC";
             this.labelPC.Size = new System.Drawing.Size(10, 13);
             this.labelPC.TabIndex = 2;
@@ -136,12 +141,13 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.RealMemoryGridView);
             this.groupBox1.Location = new System.Drawing.Point(12, 203);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(625, 86);
+            this.groupBox1.Size = new System.Drawing.Size(625, 174);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Page Table";
+            this.groupBox1.Text = "Real Memory";
             // 
             // ParamGroupBox
             // 
@@ -231,11 +237,28 @@
             this.outputTextBox.Size = new System.Drawing.Size(339, 61);
             this.outputTextBox.TabIndex = 0;
             // 
+            // RealMemoryGridView
+            // 
+            this.RealMemoryGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.RealMemoryGridView.Location = new System.Drawing.Point(7, 13);
+            this.RealMemoryGridView.Name = "RealMemoryGridView";
+            this.RealMemoryGridView.Size = new System.Drawing.Size(612, 155);
+            this.RealMemoryGridView.TabIndex = 0;
+            // 
+            // labelPTR
+            // 
+            this.labelPTR.AutoSize = true;
+            this.labelPTR.Location = new System.Drawing.Point(290, 25);
+            this.labelPTR.Name = "labelPTR";
+            this.labelPTR.Size = new System.Drawing.Size(10, 13);
+            this.labelPTR.TabIndex = 4;
+            this.labelPTR.Text = "-";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1007, 325);
+            this.ClientSize = new System.Drawing.Size(1044, 474);
             this.Controls.Add(this.outputGroupBox);
             this.Controls.Add(this.ParamGroupBox);
             this.Controls.Add(this.groupBox1);
@@ -249,10 +272,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.VirtualMemoryGridView)).EndInit();
             this.RegisterGroupBox.ResumeLayout(false);
             this.RegisterGroupBox.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
             this.ParamGroupBox.ResumeLayout(false);
             this.ParamGroupBox.PerformLayout();
             this.outputGroupBox.ResumeLayout(false);
             this.outputGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.RealMemoryGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -279,6 +304,8 @@
         private System.Windows.Forms.GroupBox outputGroupBox;
         private System.Windows.Forms.Button executeAllButton;
         private System.Windows.Forms.TextBox outputTextBox;
+        private System.Windows.Forms.DataGridView RealMemoryGridView;
+        private System.Windows.Forms.Label labelPTR;
     }
 }
 

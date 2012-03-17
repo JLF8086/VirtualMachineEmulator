@@ -172,8 +172,7 @@ namespace VirtualMachineEmulator
                 default:
                     {
                         throw new ArgumentException("Unknown command: " + word.Value);
-                    }
-                    
+                    }             
             }
         }
     }
