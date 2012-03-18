@@ -36,15 +36,15 @@ namespace VirtualMachineEmulator
             VirtualMemoryGridView.Rows.Clear();
             VirtualMemoryGridView.Columns.Clear();
             Memory mem = vm.Memory;
-            for (int i = 0; i < mem.WordCount; i++)
+            for (Int16 i = 0; i < mem.WordCount; i++)
             {
                 VirtualMemoryGridView.Columns.Add(i.ToString("X"), i.ToString("X"));
                 VirtualMemoryGridView.Columns[i].DisplayIndex = i;
             }
-            for (int i = 0; i < mem.BlockCount; i++)
+            for (Int16 i = 0; i < mem.BlockCount; i++)
             {
                 string[] rowValues = new string[mem.WordCount];
-                for (int j = 0; j < mem.WordCount; j++)
+                for (Int16 j = 0; j < mem.WordCount; j++)
                 {
                     if(!(mem[i,j].ToString() == "----"))
                         rowValues[j] = mem[i, j].ToString();
@@ -58,10 +58,10 @@ namespace VirtualMachineEmulator
         private void FillVirtualMemoryGrid()
         {
             Memory mem = vm.Memory;
-            for (int i = 0; i < mem.BlockCount; i++)
+            for (Int16 i = 0; i < mem.BlockCount; i++)
             {
                 string[] rowValues = new string[mem.WordCount];
-                for (int j = 0; j < mem.WordCount; j++)
+                for (Int16 j = 0; j < mem.WordCount; j++)
                 {
                     if (!(mem[i, j].ToString() == "----"))
                         rowValues[j] = mem[i, j].ToString();
@@ -76,15 +76,15 @@ namespace VirtualMachineEmulator
         {
             RealMemoryGridView.Rows.Clear();
             RealMemoryGridView.Columns.Clear();
-            for (int i = 0; i < RealMachine.Memory.WordCount; i++)
+            for (Int16 i = 0; i < RealMachine.Memory.WordCount; i++)
             {
                 RealMemoryGridView.Columns.Add(i.ToString("X"), i.ToString("X"));
                 RealMemoryGridView.Columns[i].DisplayIndex = i;
             }
-            for (int i = 0; i < RealMachine.Memory.BlockCount; i++)
+            for (Int16 i = 0; i < RealMachine.Memory.BlockCount; i++)
             {
                 string[] rowValues = new string[RealMachine.Memory.WordCount];
-                for (int j = 0; j < RealMachine.Memory.WordCount; j++)
+                for (Int16 j = 0; j < RealMachine.Memory.WordCount; j++)
                 {
                     if (!(RealMachine.Memory[i, j].ToString() == "----"))
                         rowValues[j] = RealMachine.Memory[i, j].ToString();
@@ -97,10 +97,10 @@ namespace VirtualMachineEmulator
         private void FillRealMemoryGrid()
         {
             vm.MapBlocks();
-            for (int i = 0; i < RealMachine.Memory.BlockCount; i++)
+            for (Int16 i = 0; i < RealMachine.Memory.BlockCount; i++)
             {
                 string[] rowValues = new string[RealMachine.Memory.WordCount];
-                for (int j = 0; j < RealMachine.Memory.WordCount; j++)
+                for (Int16 j = 0; j < RealMachine.Memory.WordCount; j++)
                 {
                     if (!(RealMachine.Memory[i, j].ToString() == "----"))
                         rowValues[j] = RealMachine.Memory[i, j].ToString();
@@ -118,7 +118,7 @@ namespace VirtualMachineEmulator
             enterInputButton.Enabled = true;
         }
 
-        private void PrintBuffer()
+        private void PrInt16Buffer()
         {
             outputTextBox.Text += vm.Io.Buffer;
             outputTextBox.Text += "\r\n";
@@ -148,6 +148,7 @@ namespace VirtualMachineEmulator
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //MessageBox.Show(Word.HexToInt("FFFF").ToString());
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 vm = new VirtualMachine(openFileDialog1.FileName);
@@ -164,7 +165,7 @@ namespace VirtualMachineEmulator
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(FillRealMemoryGrid);
                 this.vm.Cpu.CommandExecuted += new VMEventHandler(SetNextCommandLabel);
                 this.vm.Io.InputRequested += new VMEventHandler(PrepareForInput);
-                this.vm.Io.OutputRequested += new VMEventHandler(PrintBuffer);
+                this.vm.Io.OutputRequested += new VMEventHandler(PrInt16Buffer);
                 this.vm.VMTaskFinished += new VMEventHandler(vmTaskFinishHandler);
                 this.vm.CheckIfInputNext();
             }

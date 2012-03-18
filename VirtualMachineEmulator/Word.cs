@@ -24,12 +24,12 @@ namespace VirtualMachineEmulator
 
         public static Word operator +(Word word1, Word word2)
         {
-            int op1, op2, sum;
+            Int16 op1, op2, sum;
             try
             {
-                op1 = Convert.ToInt32(word1.Value, 16);
-                op2 = Convert.ToInt32(word2.Value, 16);
-                sum = op1 + op2;
+                op1 = HexToInt(word1.Value);
+                op2 = HexToInt(word2.Value);
+                sum = (Int16)(op1 + op2);
             }
             catch (Exception)
             {
@@ -40,12 +40,12 @@ namespace VirtualMachineEmulator
 
         public static Word operator -(Word word1, Word word2)
         {
-            int op1, op2, difference;
+            Int16 op1, op2, difference;
             try
             {
-                op1 = Convert.ToInt32(word1.Value, 16);
-                op2 = Convert.ToInt32(word2.Value, 16);
-                difference = op1 - op2;
+                op1 = HexToInt(word1.Value);
+                op2 = HexToInt(word2.Value);
+                difference = (Int16)(op1 - op2);
             }
             catch (Exception)
             {
@@ -56,11 +56,11 @@ namespace VirtualMachineEmulator
 
         public static bool operator >(Word word1, Word word2)
         {
-            int op1, op2;
+            Int16 op1, op2;
             try
             {
-                op1 = Convert.ToInt32(word1.Value, 16);
-                op2 = Convert.ToInt32(word2.Value, 16);
+                op1 = HexToInt(word1.Value);
+                op2 = HexToInt(word2.Value);
             }
             catch (Exception)
             {
@@ -71,11 +71,11 @@ namespace VirtualMachineEmulator
 
         public static bool operator <(Word word1, Word word2)
         {
-            int op1, op2;
+            Int16 op1, op2;
             try
             {
-                op1 = Convert.ToInt32(word1.Value, 16);
-                op2 = Convert.ToInt32(word2.Value, 16);
+                op1 = HexToInt(word1.Value);
+                op2 = HexToInt(word2.Value);
             }
             catch (Exception)
             {
@@ -84,9 +84,10 @@ namespace VirtualMachineEmulator
             return op1 < op2;
         }
 
-        public static int HexToInt(string number)
+        public static Int16 HexToInt(string number)
         {
-            return Convert.ToInt32(number, 16);
+            //int numb = Convert.ToInt16(number, 16);
+            return Convert.ToInt16(number, 16);
         }
 
         public override string ToString()

@@ -1,0 +1,24 @@
+﻿$000
+LA42
+LC40
+CMP
+JA10
+PD30
+$END
+$010
+LA30
+LC41
+ADD
+SA30
+LA42
+LC43
+SUB
+SA42
+JM00
+$030
+0000 //sandauga
+$040
+0000 //nulis   
+0008 //dauginys
+000F //daugiklis
+0001 //vienas

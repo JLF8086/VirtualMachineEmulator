@@ -1,0 +1,14 @@
+﻿$000
+PD40
+GD30
+LA30
+LC31
+ADD
+SA20
+PD20
+$040
+Ives
+kite
+ du 
+skai
+cius

@@ -1,9 +1,10 @@
 ﻿$000
-GD40
 LA20
-PD40
-PD20
+LC21
+ADD
+SA30
+PD30
 $END
 $020
-abcd
-Iower
+FFF0
+00FF

@@ -41,16 +41,16 @@ namespace VirtualMachineEmulator
                         currentWord = 0;
                         break;
                     }
-                    case "0x":
+                    /*case "0x":
                     {
                         this.memory[currentBlock, currentWord].Value = line.Substring(2, line.Length - 2);
                         this.memory[currentBlock, currentWord].IsOccupied = true;
                         currentWord++;
                         break;
-                    }
+                    }*/
                     default:
                     {
-                        this.memory[currentBlock, currentWord].Value = line;
+                        this.memory[currentBlock, currentWord].Value = line.Length >= 4 ? line.Substring(0, 4) : line;
                         this.memory[currentBlock, currentWord].IsOccupied = true;
                         currentWord++;
                         break;

@@ -79,6 +79,9 @@ namespace VirtualMachineEmulator
                 case "AD":
                     {
                         this.AX = this.AX + this.CX;
+                        /*if (AX.Value.Length >= 5)
+                            AX = AX - new Word("FFFF");
+                        */
                         break;
                     }
                 case "SU":
@@ -125,36 +128,42 @@ namespace VirtualMachineEmulator
                     {
                         if (this.SF == 1)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "JN":
                     {
                         if (this.SF != 1)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "JA":
                     {
                         if (this.SF == 0)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "JB":
                     {
                         if (this.SF == 2)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "JG":
                     {
                         if (this.SF == 0 || this.SF == 1)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "JL":
                     {
                         if (this.SF == 1 || this.SF == 2)
                             this.PC = Convert.ToInt16(operand, 16);
+                        else this.PC++;
                         break;
                     }
                 case "GD": //TO DO: everything
