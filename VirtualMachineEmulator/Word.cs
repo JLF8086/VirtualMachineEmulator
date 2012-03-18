@@ -30,6 +30,11 @@ namespace VirtualMachineEmulator
                 op1 = HexToInt(word1.Value);
                 op2 = HexToInt(word2.Value);
                 sum = (Int16)(op1 + op2);
+                /*
+                 * Neaisku ar cia taip reikia
+                if (sum != (int)(op1 + op2))
+                    sum -= HexToInt("7FFF");
+                 */
             }
             catch (Exception)
             {
@@ -46,6 +51,11 @@ namespace VirtualMachineEmulator
                 op1 = HexToInt(word1.Value);
                 op2 = HexToInt(word2.Value);
                 difference = (Int16)(op1 - op2);
+                /*
+                 * Neaisku ar cia taip reikia
+                 * if (difference != (int)(op1 - op2))
+                    difference += HexToInt("7FFF");
+                 */
             }
             catch (Exception)
             {

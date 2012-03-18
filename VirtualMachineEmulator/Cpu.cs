@@ -79,9 +79,6 @@ namespace VirtualMachineEmulator
                 case "AD":
                     {
                         this.AX = this.AX + this.CX;
-                        /*if (AX.Value.Length >= 5)
-                            AX = AX - new Word("FFFF");
-                        */
                         break;
                     }
                 case "SU":
